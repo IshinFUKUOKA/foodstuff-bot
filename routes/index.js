@@ -19,6 +19,10 @@ router.post('/', function(req, res, next) {
   }
   // get Message
   action.execute(commands, function(err, data) {
+    if(err) {
+      console.log("Error: " + err);
+      res.end(err);
+    }
     let message = data;
     res.end(message);
   });
