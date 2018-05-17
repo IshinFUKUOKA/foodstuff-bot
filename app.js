@@ -4,6 +4,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
+var chatRouter = require('./routes/chat');
 
 var app = express();
 
@@ -12,7 +13,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use('/chat', indexRouter);
+app.use('/', indexRouter);
+app.use('/chat', chatRouter);
 
 // エラーハンドラ
 app.use(function(err, req, res, next) {

@@ -1,5 +1,5 @@
 const requestPromise = require('request-promise');
-reqire('dotenv').config();
+require('dotenv').config();
 
 const jsonget = function(uri) {
   let options = {
