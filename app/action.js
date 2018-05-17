@@ -1,4 +1,5 @@
 const requestPromise = require('request-promise');
+reqire('dotenv').config();
 
 const jsonget = function(uri) {
   let options = {
@@ -10,7 +11,7 @@ const jsonget = function(uri) {
   return requestPromise(options);
 }
 
-const apiHost = 'http://foodstuff-api:3000/';
+const apiHost = process.env.API_HOST;
 
 // コマンドを受取りアクションを実行
 var execute = function(commands, callback) {
