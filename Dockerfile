@@ -4,7 +4,7 @@ WORKDIR /app
 ADD . /app
 
 RUN groupadd -r foodstuff && useradd -r -g foodstuff foodstuff
-RUN mkdir -p /home/foodstuff/.config && chown -R foodstuff:foodstuff /home/foodstuff
+RUN mkdir -p /home/foodstuff/.config && chown -R foodstuff:foodstuff /home/foodstuff && chown -R foodstuff:foodstuff /app
 
 EXPOSE 3000
 USER foodstuff
