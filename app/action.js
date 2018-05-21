@@ -11,7 +11,8 @@ const jsonget = function(uri) {
   return requestPromise(options);
 }
 
-const apiHost = process.env.API_HOST;
+const apiPort = process.env.API_PORT || '80';
+const apiHost = process.env.API_HOST + ":" + apiPort;
 
 // コマンドを受取りアクションを実行
 var execute = function(commands, callback) {
@@ -68,7 +69,7 @@ var execute = function(commands, callback) {
 // APIに登録処理をリクエスト
 function register(name, expiration) {
   console.log('request.params: { name: '  + name + ', expiration:' + expiration + ' }');
-  let uri = apiHost + 'dishes';
+  let uri = apiHost + '/dishes';
   return new Promise(function(resolve, reject) {
     let options = {
       method: 'POST',
@@ -94,7 +95,7 @@ function register(name, expiration) {
 // APIに参照処理をリクエスト
 function refer(name) {
   console.log('request.params: { name: '  + name + ' }');
-  let uri = apiHost + 'dishes/' + encodeURIComponent(name);
+  let uri = apiHost + '/dishes/' + encodeURIComponent(name);
   return new Promise(function(resolve, reject){
     jsonget(uri).then(function(json) {
         console.log(json);
@@ -108,7 +109,7 @@ function refer(name) {
 // APIに削除処理をリクエスト
 function consume(name) {
   console.log('request.params: { name: '  + name + ' }');
-  let uri = apiHost + 'dishes/' + encodeURIComponent(name);
+  let uri = apiHost + '/dishes/' + encodeURIComponent(name);
   return new Promise(function(resolve, reject){
     let options = {
       method: 'DELETE',
