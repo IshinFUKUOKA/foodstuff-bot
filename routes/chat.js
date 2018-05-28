@@ -6,30 +6,35 @@ const request = require('request');
 
 /* POST from slack. */
 router.post('/', function(req, res, next) {
+  // debug
+  console.log('request body:' + JSON.stringify(req.body));
   res.header('Content-Type', 'text/plain;charset=utf-8');
   if(req.body.type == 'url_verification') {
     res.header('Content-Type', 'text/plain;charset=utf-8');
     let challenge = req.body.challenge;
     res.status(200).send(challenge)
   } else {
+    // response message
+    let message = 'zzz';
     // TODO Token check
-    let text = req.body.text;
-    let response_url = req.body.response_url;
-    console.log('text: ' + text);
-    console.log('response_url: ' + response_url);
+    let text = req.body.event.text;
     // 半角 or 全角スペースで区切り
     commands = text.split(/\ |　/);
+    // メンションを削除
+    commands.shift();
+    console.log('commands:' + commands);
     // TODO Validation check
     if (!commands[0]) {
-      res.end('コマンドエラー。\n' + usage);
+      message = 'コマンドエラー。\n' + usage;
     }
+
     // get Message
     action.execute(commands, function(err, data) {
       if(err) {
         console.log("Error: " + err);
         res.end(err);
       }
-      let message = data;
+      message = data;
       // call Slack API
       var headers = { 'Content-type': 'application/json' }
       var options = {
